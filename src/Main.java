@@ -1,38 +1,58 @@
 import java.util.Scanner;
 
 class Kalkulator {
-    protected double liczba1, liczba2, wynik;
+    protected double[] liczby;
     protected char operator;
+    protected double wynik;
 
     protected void wczytajDane() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Podaj pierwszą liczbę: ");
-        liczba1 = scanner.nextDouble();
+        System.out.print("Podaj ilość liczb: ");
+        int iloscLiczb = scanner.nextInt();
+        liczby = new double[iloscLiczb];
+
+        for (int i = 0; i < iloscLiczb; i++) {
+            System.out.print("Podaj liczbę " + (i + 1) + ": ");
+            liczby[i] = scanner.nextDouble();
+        }
 
         System.out.print("Podaj operator (+, -, *, /): ");
         operator = scanner.next().charAt(0);
-
-        System.out.print("Podaj drugą liczbę: ");
-        liczba2 = scanner.nextDouble();
     }
 
     protected void obliczWynik() {
         switch (operator) {
             case '+':
-                wynik = liczba1 + liczba2;
+                wynik = 0;
+                for (double liczba : liczby) {
+                    wynik += liczba;
+                }
                 break;
 
             case '-':
-                wynik = liczba1 - liczba2;
+                wynik = liczby[0];
+                for (int i = 1; i < liczby.length; i++) {
+                    wynik -= liczby[i];
+                }
                 break;
 
             case '*':
-                wynik = liczba1 * liczba2;
+                wynik = 1;
+                for (double liczba : liczby) {
+                    wynik *= liczba;
+                }
                 break;
 
             case '/':
-                wynik = liczba1 / liczba2;
+                wynik = liczby[0];
+                for (int i = 1; i < liczby.length; i++) {
+                    if (liczby[i] == 0) {
+                        System.out.println("Dzielenie przez zero!");
+                        return;
+                    }
+                    wynik /= liczby[i];
+                }
                 break;
 
             default:
@@ -42,7 +62,11 @@ class Kalkulator {
     }
 
     protected void wyswietlWynik() {
-        System.out.println(liczba1 + " " + operator + " " + liczba2 + " = " + wynik);
+        System.out.print(liczby[0]);
+        for (int i = 1; i < liczby.length; i++) {
+            System.out.print(" " + operator + " " + liczby[i]);
+        }
+        System.out.println(" = " + wynik);
     }
 }
 
