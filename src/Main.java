@@ -18,7 +18,7 @@ abstract class Kalkulator {
             liczby[i] = scanner.nextDouble();
 
             if (i < iloscLiczb - 1) {
-                System.out.print("Podaj operator (+, -, *, /): ");
+                System.out.print("Podaj operator (+, -, *, /, ^): ");
                 operatory[i] = scanner.next().charAt(0);
             }
         }
@@ -141,11 +141,36 @@ class Dzielenie extends Kalkulator {
     }
 }
 
+class Potegowanie extends Kalkulator {
+    @Override
+    protected void obliczWynik() {
+        int indexOperatora = 0;
+        wynik = liczby[0];
+
+        for (int i = 1; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
+                case '^':
+                    wynik = Math.pow(wynik, liczba);
+                    break;
+
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
+        }
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie): ");
+        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie): ");
         int operacja = scanner.nextInt();
 
         Kalkulator kalkulator;
@@ -162,6 +187,9 @@ public class Main {
                 break;
             case 4:
                 kalkulator = new Dzielenie();
+                break;
+            case 5:
+                kalkulator = new Potegowanie();
                 break;
             default:
                 System.out.println("Nieprawidłowa operacja.");
