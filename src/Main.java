@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 class Kalkulator {
     protected double[] liczby;
-    protected char operator;
+    protected char[] operatory;
     protected double wynik;
 
     protected void wczytajDane() {
@@ -11,61 +11,64 @@ class Kalkulator {
         System.out.print("Podaj ilość liczb: ");
         int iloscLiczb = scanner.nextInt();
         liczby = new double[iloscLiczb];
+        operatory = new char[iloscLiczb - 1];
 
         for (int i = 0; i < iloscLiczb; i++) {
             System.out.print("Podaj liczbę " + (i + 1) + ": ");
             liczby[i] = scanner.nextDouble();
-        }
 
-        System.out.print("Podaj operator (+, -, *, /): ");
-        operator = scanner.next().charAt(0);
+            if (i < iloscLiczb - 1) {
+                System.out.print("Podaj operator (+, -, *, /): ");
+                operatory[i] = scanner.next().charAt(0);
+            }
+        }
     }
 
     protected void obliczWynik() {
-        switch (operator) {
-            case '+':
-                wynik = 0;
-                for (double liczba : liczby) {
+        int indexOperatora = 0;
+        wynik = liczby[0];
+
+        for (int i = 1; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
+                case '+':
                     wynik += liczba;
-                }
-                break;
+                    break;
 
-            case '-':
-                wynik = liczby[0];
-                for (int i = 1; i < liczby.length; i++) {
-                    wynik -= liczby[i];
-                }
-                break;
+                case '-':
+                    wynik -= liczba;
+                    break;
 
-            case '*':
-                wynik = 1;
-                for (double liczba : liczby) {
+                case '*':
                     wynik *= liczba;
-                }
-                break;
+                    break;
 
-            case '/':
-                wynik = liczby[0];
-                for (int i = 1; i < liczby.length; i++) {
-                    if (liczby[i] == 0) {
+                case '/':
+                    if (liczba == 0) {
                         System.out.println("Dzielenie przez zero!");
                         return;
                     }
-                    wynik /= liczby[i];
-                }
-                break;
+                    wynik /= liczba;
+                    break;
 
-            default:
-                System.out.println("Nieprawidłowy operator.");
-                return;
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
         }
     }
 
     protected void wyswietlWynik() {
         System.out.print(liczby[0]);
+
         for (int i = 1; i < liczby.length; i++) {
-            System.out.print(" " + operator + " " + liczby[i]);
+            System.out.print(" " + operatory[i - 1] + " " + liczby[i]);
         }
+
         System.out.println(" = " + wynik);
     }
 }
