@@ -1,8 +1,11 @@
-public class Main {
-    public static void main(String[] args) {
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
-        double liczba1, liczba2, wynik;
-        char operator;
+import java.util.Scanner;
+
+class Kalkulator {
+    protected double liczba1, liczba2, wynik;
+    protected char operator;
+
+    protected void wczytajDane() {
+        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Podaj pierwszą liczbę: ");
         liczba1 = scanner.nextDouble();
@@ -12,7 +15,9 @@ public class Main {
 
         System.out.print("Podaj drugą liczbę: ");
         liczba2 = scanner.nextDouble();
+    }
 
+    protected void obliczWynik() {
         switch (operator) {
             case '+':
                 wynik = liczba1 + liczba2;
@@ -31,10 +36,21 @@ public class Main {
                 break;
 
             default:
-                System.out.printf("Nieprawidłowy operator.");
+                System.out.println("Nieprawidłowy operator.");
                 return;
         }
+    }
 
+    protected void wyswietlWynik() {
         System.out.println(liczba1 + " " + operator + " " + liczba2 + " = " + wynik);
+    }
+}
+
+public class Main extends Kalkulator {
+    public static void main(String[] args) {
+        Main main = new Main();
+        main.wczytajDane();
+        main.obliczWynik();
+        main.wyswietlWynik();
     }
 }
