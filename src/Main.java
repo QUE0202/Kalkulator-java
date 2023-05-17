@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-class Kalkulator {
+abstract class Kalkulator {
     protected double[] liczby;
     protected char[] operatory;
     protected double wynik;
@@ -24,6 +24,21 @@ class Kalkulator {
         }
     }
 
+    protected abstract void obliczWynik();
+
+    protected void wyswietlWynik() {
+        System.out.print(liczby[0]);
+
+        for (int i = 1; i < liczby.length; i++) {
+            System.out.print(" " + operatory[i - 1] + " " + liczby[i]);
+        }
+
+        System.out.println(" = " + wynik);
+    }
+}
+
+class Dodawanie extends Kalkulator {
+    @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
         wynik = liczby[0];
@@ -37,20 +52,29 @@ class Kalkulator {
                     wynik += liczba;
                     break;
 
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
+        }
+    }
+}
+
+class Odejmowanie extends Kalkulator {
+    @Override
+    protected void obliczWynik() {
+        int indexOperatora = 0;
+        wynik = liczby[0];
+
+        for (int i = 1; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
                 case '-':
                     wynik -= liczba;
-                    break;
-
-                case '*':
-                    wynik *= liczba;
-                    break;
-
-                case '/':
-                    if (liczba == 0) {
-                        System.out.println("Dzielenie przez zero!");
-                        return;
-                    }
-                    wynik /= liczba;
                     break;
 
                 default:
@@ -61,23 +85,28 @@ class Kalkulator {
             indexOperatora++;
         }
     }
-
-    protected void wyswietlWynik() {
-        System.out.print(liczby[0]);
-
-        for (int i = 1; i < liczby.length; i++) {
-            System.out.print(" " + operatory[i - 1] + " " + liczby[i]);
-        }
-
-        System.out.println(" = " + wynik);
-    }
 }
 
-public class Main extends Kalkulator {
+public class Main {
     public static void main(String[] args) {
-        Main main = new Main();
-        main.wczytajDane();
-        main.obliczWynik();
-        main.wyswietlWynik();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie): ");
+        int operacja = scanner.nextInt();
+
+        Kalkulator kalkulator;
+
+        if (operacja == 1) {
+            kalkulator = new Dodawanie();
+        } else if (operacja == 2) {
+            kalkulator = new Odejmowanie();
+        } else {
+            System.out.println("Nieprawidłowa operacja.");
+            return;
+        }
+
+        kalkulator.wczytajDane();
+        kalkulator.obliczWynik();
+        kalkulator.wyswietlWynik();
     }
 }
