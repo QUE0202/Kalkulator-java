@@ -18,7 +18,7 @@ abstract class Kalkulator {
             liczby[i] = scanner.nextDouble();
 
             if (i < iloscLiczb - 1) {
-                System.out.print("Podaj operator (+, -, *, /, ^): ");
+                System.out.print("Podaj operator (+, -, *, /, ^, sqrt): ");
                 operatory[i] = scanner.next().charAt(0);
             }
         }
@@ -166,6 +166,30 @@ class Potegowanie extends Kalkulator {
     }
 }
 
+class Pierwiastkowanie extends Kalkulator {
+    @Override
+    protected void obliczWynik() {
+        int indexOperatora = 0;
+
+        for (int i = 0; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
+                case 's':
+                    wynik = Math.sqrt(liczba);
+                    break;
+
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
+        }
+    }
+}
+
 class Macierze extends Kalkulator {
     private double[][] macierz1;
     private double[][] macierz2;
@@ -245,7 +269,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie, 6 - mnożenie macierzy): ");
+        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie, 6 - mnożenie macierzy, 7 - pierwiastkowanie): ");
         int operacja = scanner.nextInt();
 
         Kalkulator kalkulator;
@@ -268,6 +292,9 @@ public class Main {
                 break;
             case 6:
                 kalkulator = new Macierze();
+                break;
+            case 7:
+                kalkulator = new Pierwiastkowanie();
                 break;
             default:
                 System.out.println("Nieprawidłowa operacja.");
