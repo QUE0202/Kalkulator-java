@@ -1,0 +1,5 @@
+dziedziczenie
+klasy
+operatory
+żeby nie można było wpisać słowa
+publiczne i prywatne klasy
