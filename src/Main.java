@@ -87,22 +87,85 @@ class Odejmowanie extends Kalkulator {
     }
 }
 
+class Mnozenie extends Kalkulator {
+    @Override
+    protected void obliczWynik() {
+        int indexOperatora = 0;
+        wynik = liczby[0];
+
+        for (int i = 1; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
+                case '*':
+                    wynik *= liczba;
+                    break;
+
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
+        }
+    }
+}
+
+class Dzielenie extends Kalkulator {
+    @Override
+    protected void obliczWynik() {
+        int indexOperatora = 0;
+        wynik = liczby[0];
+
+        for (int i = 1; i < liczby.length; i++) {
+            char operator = operatory[indexOperatora];
+            double liczba = liczby[i];
+
+            switch (operator) {
+                case '/':
+                    if (liczba == 0) {
+                        System.out.println("Dzielenie przez zero!");
+                        return;
+                    }
+                    wynik /= liczba;
+                    break;
+
+                default:
+                    System.out.println("Nieprawidłowy operator.");
+                    return;
+            }
+
+            indexOperatora++;
+        }
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie): ");
+        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie): ");
         int operacja = scanner.nextInt();
 
         Kalkulator kalkulator;
 
-        if (operacja == 1) {
-            kalkulator = new Dodawanie();
-        } else if (operacja == 2) {
-            kalkulator = new Odejmowanie();
-        } else {
-            System.out.println("Nieprawidłowa operacja.");
-            return;
+        switch (operacja) {
+            case 1:
+                kalkulator = new Dodawanie();
+                break;
+            case 2:
+                kalkulator = new Odejmowanie();
+                break;
+            case 3:
+                kalkulator = new Mnozenie();
+                break;
+            case 4:
+                kalkulator = new Dzielenie();
+                break;
+            default:
+                System.out.println("Nieprawidłowa operacja.");
+                return;
         }
 
         kalkulator.wczytajDane();
