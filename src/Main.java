@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-abstract class Kalkulator {
+abstract class Calc {
     protected double[] liczby;
     protected char[] operatory;
     protected double wynik;
@@ -37,7 +37,7 @@ abstract class Kalkulator {
     }
 }
 
-class Dodawanie extends Kalkulator {
+class Dodawanie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -62,7 +62,7 @@ class Dodawanie extends Kalkulator {
     }
 }
 
-class Odejmowanie extends Kalkulator {
+class Odejmowanie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -87,7 +87,7 @@ class Odejmowanie extends Kalkulator {
     }
 }
 
-class Mnozenie extends Kalkulator {
+class Mnozenie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -112,7 +112,7 @@ class Mnozenie extends Kalkulator {
     }
 }
 
-class Dzielenie extends Kalkulator {
+class Dzielenie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -141,7 +141,7 @@ class Dzielenie extends Kalkulator {
     }
 }
 
-class Potegowanie extends Kalkulator {
+class Potegowanie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -166,7 +166,7 @@ class Potegowanie extends Kalkulator {
     }
 }
 
-class Pierwiastkowanie extends Kalkulator {
+class Pierwiastkowanie extends Calc {
     @Override
     protected void obliczWynik() {
         int indexOperatora = 0;
@@ -190,7 +190,7 @@ class Pierwiastkowanie extends Kalkulator {
     }
 }
 
-class Macierze extends Kalkulator {
+class Macierze extends Calc {
     private double[][] macierz1;
     private double[][] macierz2;
     private double[][] wynikMacierzy;
@@ -265,44 +265,4 @@ class Macierze extends Kalkulator {
     }
 }
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie, 6 - mnożenie macierzy, 7 - pierwiastkowanie): ");
-        int operacja = scanner.nextInt();
-
-        Kalkulator kalkulator;
-
-        switch (operacja) {
-            case 1:
-                kalkulator = new Dodawanie();
-                break;
-            case 2:
-                kalkulator = new Odejmowanie();
-                break;
-            case 3:
-                kalkulator = new Mnozenie();
-                break;
-            case 4:
-                kalkulator = new Dzielenie();
-                break;
-            case 5:
-                kalkulator = new Potegowanie();
-                break;
-            case 6:
-                kalkulator = new Macierze();
-                break;
-            case 7:
-                kalkulator = new Pierwiastkowanie();
-                break;
-            default:
-                System.out.println("Nieprawidłowa operacja.");
-                return;
-        }
-
-        kalkulator.wczytajDane();
-        kalkulator.obliczWynik();
-        kalkulator.wyswietlWynik();
-    }
-}
