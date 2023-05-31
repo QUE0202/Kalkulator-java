@@ -4,7 +4,6 @@ abstract class Kalkulator {
     protected double[] liczby;
     protected char[] operatory;
     protected double wynik;
-    protected double prawdopodobienstwo; // Nowe pole przechowujące prawdopodobieństwo
 
     protected void wczytajDane() {
         Scanner scanner = new Scanner(System.in);
@@ -27,10 +26,6 @@ abstract class Kalkulator {
 
     protected abstract void obliczWynik();
 
-    protected void obliczPrawdopodobienstwo() {
-        prawdopodobienstwo = wynik / 100.0; // Obliczanie prawdopodobieństwa
-    }
-
     protected void wyswietlWynik() {
         System.out.print(liczby[0]);
 
@@ -39,7 +34,6 @@ abstract class Kalkulator {
         }
 
         System.out.println(" = " + wynik);
-        System.out.println("Prawdopodobieństwo: " + prawdopodobienstwo); // Wyświetlanie wyniku prawdopodobieństwa
     }
 }
 
@@ -65,8 +59,6 @@ class Dodawanie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -92,8 +84,6 @@ class Odejmowanie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -119,8 +109,6 @@ class Mnozenie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -150,8 +138,6 @@ class Dzielenie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -177,8 +163,6 @@ class Potegowanie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -203,8 +187,6 @@ class Pierwiastkowanie extends Kalkulator {
 
             indexOperatora++;
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 }
 
@@ -268,8 +250,6 @@ class Macierze extends Kalkulator {
                 }
             }
         }
-
-        obliczPrawdopodobienstwo(); // Obliczanie prawdopodobieństwa
     }
 
     @Override
@@ -289,12 +269,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie, 6 - pierwiastkowanie, 7 - mnożenie macierzy): ");
-        int wybor = scanner.nextInt();
+        System.out.print("Wybierz operację (1 - dodawanie, 2 - odejmowanie, 3 - mnożenie, 4 - dzielenie, 5 - potęgowanie, 6 - mnożenie macierzy, 7 - pierwiastkowanie): ");
+        int operacja = scanner.nextInt();
 
-        Kalkulator kalkulator = null;
+        Kalkulator kalkulator;
 
-        switch (wybor) {
+        switch (operacja) {
             case 1:
                 kalkulator = new Dodawanie();
                 break;
@@ -311,13 +291,13 @@ public class Main {
                 kalkulator = new Potegowanie();
                 break;
             case 6:
-                kalkulator = new Pierwiastkowanie();
-                break;
-            case 7:
                 kalkulator = new Macierze();
                 break;
+            case 7:
+                kalkulator = new Pierwiastkowanie();
+                break;
             default:
-                System.out.println("Nieprawidłowy wybór.");
+                System.out.println("Nieprawidłowa operacja.");
                 return;
         }
 
